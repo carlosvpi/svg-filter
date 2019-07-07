@@ -1,0 +1,12 @@
+{
+  "name": "svg-filter",
+  "version": "0.0.0",
+  "description": "Utility functions to create svg filters on web pages",
+  "main": "src/index.js",
+  "repository": "https://github.com/carlosvpi/svg-filter.git",
+  "author": "CarlosVazPI <carlos.vazpi@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+  	"bundle": 
+  }
+}
