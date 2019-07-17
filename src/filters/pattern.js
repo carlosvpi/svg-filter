@@ -1,13 +1,25 @@
-import { selectOrAppend } from 'utils/select_or_append'
-import { passAttributes } from 'utils/pass_attributes'
+import {
+	getNodeFromTagName,
+	getId,
+	setAttributes
+} from 'utils/getNodeFromTagName'
 
-export default function pattern(svg, patternFunction, attr = {}) {
-    const defs = selectOrAppend(svg, 'defs')
-    const id = `radial-gradient-${Math.random().toString(36).substr(2, 9)}`
-    const patternD3Node = defs.append('pattern').attr('id', id)
+export const pattern = (svg) => {
+    const defsNode = getNodeFromTagName(svg)('DEFS')
 
-    passAttributes(patternD3Node, attr)
-    patternFunction(patternD3Node)
+	return ({ children, ...attrs }) => {
+	    if (!(children typeof 'function')) {
+	    	throw new Error(`Expected a function as children of "pattern" node, got ${children}`)
+	    }
 
-    return `url(#${id})`
+	    const id = `pattern-${getId()}`
+	    const patternNode = document.createNode('pattern')
+
+	    patternNode.setAttribute('id', id)
+	    setAttributes(patternNode, attrs)
+	    defsNode.appendChildren(patternNode)
+	    children(patternNode)
+
+	    return `url(#${id})`
+	}
 }
