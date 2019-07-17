@@ -1,0 +1,42 @@
+Arguments: 
+  /usr/local/bin/node /usr/local/bin/yarn test
+
+PATH: 
+  /Users/carlos/.cabal/bin:/Applications/ghc-7.8.3.app/Contents/bin:/Users/carlos/.rbenv/bin:Aplicaciones/ghc-7.8:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/carlos/Desktop/PROYECTOS/Informática/Entornos de programación/Maven - Scala, Java/apache-maven-3.3.9/bin:/Users/carlos/Desktop/PROYECTOS/Informática/Desarrollo Web/Mongodb/mongodb-osx-x86_64-3.2.0/bin:/Users/carlos/.gem/ruby/2.0.0/bin:/opt/X11/bin:/usr/texbin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/carlos/Desktop/PROYECTOS/Informática/Entornos de programación/Maven - Scala, Java/apache-maven-3.3.9/bin:/Users/carlos/Desktop/PROYECTOS/Informática/Desarrollo Web/Mongodb/mongodb-osx-x86_64-3.2.0/bin:/Users/carlos/.gem/ruby/2.0.0/bin:/Users/carlos/Development/bin:/usr/texbin:/opt/X11/bin:/Users/carlos/.rvm/bin:/Applications/CMake.app/Contents/bin
+
+Yarn version: 
+  1.16.0
+
+Node version: 
+  12.1.0
+
+Platform: 
+  darwin x64
+
+Trace: 
+  SyntaxError: /Users/carlos/Development/repos/svg-filter/package.json: Unexpected token } in JSON at position 313
+      at JSON.parse (<anonymous>)
+      at /usr/local/lib/node_modules/yarn/lib/cli.js:1625:59
+      at Generator.next (<anonymous>)
+      at step (/usr/local/lib/node_modules/yarn/lib/cli.js:304:30)
+      at /usr/local/lib/node_modules/yarn/lib/cli.js:315:13
+
+npm manifest: 
+  {
+    "name": "svg-filter",
+    "version": "0.0.0",
+    "description": "Utility functions to create svg filters on web pages",
+    "main": "src/index.js",
+    "repository": "https://github.com/carlosvpi/svg-filter.git",
+    "author": "CarlosVazPI <carlos.vazpi@gmail.com>",
+    "license": "MIT",
+    "scripts": {
+    	"bundle": 
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
