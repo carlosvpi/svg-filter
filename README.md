@@ -20,8 +20,9 @@ And then, in your code, import:
 import { filter } from 'svg-filter'
 ```
 
-## Filter(props)(svg)
+## filter(svg)(props)
 
 ```javascript
 
+filter(svg)
 ```
