@@ -1,8 +1,8 @@
-import { passAttributes } from 'utils/pass_attributes'
+const { setAttributes } = require('../util/setAttributes')
+const { getCounter } = require('../util/getCounter')
+const counter = getCounter()
 
-const counter = (value => () => value++)(0)
-
-export function compositeOnSource(toBeComposed, operator = 'in', attr = {}) {
+module.exports.compositeOnSource = function compositeOnSource(toBeComposed, operator = 'in', attr = {}) {
     return parent => {
         const composedNodeResult = toBeComposed(parent).attr('result')
 
@@ -11,11 +11,11 @@ export function compositeOnSource(toBeComposed, operator = 'in', attr = {}) {
             .attr('in2', composedNodeResult)
             .attr('operator', operator)
             .attr('result', `composite-${counter()}`)
-            .call(feCompositeD3Node => passAttributes(feCompositeD3Node, attr))
+            .call(feCompositeD3Node => setAttributes(feCompositeD3Node, attr))
     }
 }
 
-export function compositeSourceOn(toBeComposed, operator = 'in', attr = {}) {
+module.exports.compositeSourceOn = function compositeSourceOn(toBeComposed, operator = 'in', attr = {}) {
     return parent => {
         const composedNodeResult = toBeComposed(parent).attr('result')
 
@@ -24,6 +24,6 @@ export function compositeSourceOn(toBeComposed, operator = 'in', attr = {}) {
             .attr('in', composedNodeResult)
             .attr('operator', operator)
             .attr('result', `composite-${counter()}`)
-            .call(feCompositeD3Node => passAttributes(feCompositeD3Node, attr))
+            .call(feCompositeD3Node => setAttributes(feCompositeD3Node, attr))
     }
 }

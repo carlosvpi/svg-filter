@@ -1,13 +1,17 @@
-import { selectOrAppend } from 'utils/select_or_append'
-import { passAttributes } from 'utils/pass_attributes'
+const { getNodeFromTag } = require('../util/getNodeFromTag')
+const { getId } = require('../util/getId')
+const { setAttributes } = require('../util/setAttributes')
 
-export default function filter(svg, childrenFilters, attr = {}) {
-    const defs = selectOrAppend(svg, 'defs')
-    const id = `filter-${Math.random().toString(36).substr(2, 9)}`
-    const filterD3Node = defs.append('filter').attr('id', id)
+module.exports.filter = (svg) => {
+	return ({ children, ...attrs }) => {
+	    const id = `filter-${getId()}`
+	    const filterNode = document.createElementNS("http://www.w3.org/2000/svg", 'filter')
 
-    passAttributes(filterD3Node, attr)
-    childrenFilters.forEach(childFilter => childFilter(filterD3Node))
+	    filterNode.setAttribute('id', id)
+	    setAttributes(filterNode, attrs)
+	    svg.appendChild(filterNode)
+	    children.forEach(child => child(filterNode))
 
-    return `url(#${id})`
+	    return `url(#${id})`
+	}
 }

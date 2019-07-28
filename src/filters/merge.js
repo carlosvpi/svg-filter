@@ -1,12 +1,11 @@
-import * as d3  from 'd3'
-import { passAttributes } from 'utils/pass_attributes'
+const { setAttributes } = require('../util/setAttributes')
+const { getCounter } = require('../util/getCounter')
+const counter = getCounter()
 
-const counter = (value => () => value++)(0)
-
-export default function merge(childrenFilters, attr) {
+module.exports.merge = function merge(childrenFilters, attr) {
     return parent => parent.append('feMerge')
         .attr('result', `merged-${counter()}`)
-        .call(feMergeD3Node => passAttributes(feMergeD3Node, attr))
+        .call(feMergeD3Node => setAttributes(feMergeD3Node, attr))
         .selectAll('feMergeNode')
         .data(childrenFilters)
         .enter()

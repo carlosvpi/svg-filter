@@ -1,9 +1,9 @@
-import { passAttributes } from 'utils/pass_attributes'
+const { setAttributes } = require('../util/setAttributes')
+const { getCounter } = require('../util/getCounter')
+const counter = getCounter()
 
-const counter = (value => () => value++)(0)
-
-export default function turbulence(attr) {
+module.exports.turbulence = function turbulence(attr) {
     return parent => parent.append('feTurbulence')
         .attr('result', `turbulence-${counter()}`)
-        .call(feTurbulenceD3Node => passAttributes(feTurbulenceD3Node, attr))
+        .call(feTurbulenceD3Node => setAttributes(feTurbulenceD3Node, attr))
 }

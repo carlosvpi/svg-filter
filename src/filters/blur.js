@@ -1,10 +1,15 @@
-import { passAttributes } from 'utils/pass_attributes'
+const { setAttributes } = require('../util/setAttributes')
+const { getCounter } = require('../util/getCounter')
+const counter = getCounter()
 
-const counter = (value => () => value++)(0)
-
-export default function blur(stdDeviation = 5, attr) {
-    return parent => parent.append('feGaussianBlur')
-        .attr('stdDeviation', stdDeviation)
-        .attr('result', `blurred-${counter('result')}`)
-        .call(feGaussianBlurD3Node => passAttributes(feGaussianBlurD3Node, attr))
+module.exports.blur = function blur(stdDeviation = 5, attr) {
+    return parent => {
+    	gaussianBlurNode = document.createElementNS("http://www.w3.org/2000/svg", 'feGaussianBlur')
+    	parent.append(gaussianBlurNode)
+    	setAttributes(gaussianBlurNode, {
+	        'stdDeviation': stdDeviation,
+	        'result': `blurred-${counter('result')}`,
+	        ...attr
+    	})
+    }
 }

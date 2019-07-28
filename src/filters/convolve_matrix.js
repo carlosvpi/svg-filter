@@ -1,10 +1,10 @@
-import { passAttributes } from 'utils/pass_attributes'
+const { setAttributes } = require('../util/setAttributes')
+const { getCounter } = require('../util/getCounter')
+const counter = getCounter()
 
-const counter = (value => () => value++)(0)
-
-export default function convolveMatrix(values, attr) {
+module.exports.convolveMatrix = function convolveMatrix(values, attr) {
     return parent => parent.append('feConvolveMatrix')
         .attr('kernelMatrix', values)
         .attr('result', `convolved-${counter()}`)
-        .call(feConvolveMatrixD3Node => passAttributes(feConvolveMatrixD3Node, attr))
+        .call(feConvolveMatrixD3Node => setAttributes(feConvolveMatrixD3Node, attr))
 }

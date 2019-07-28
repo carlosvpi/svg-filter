@@ -1,10 +1,10 @@
-import { passAttributes } from 'utils/pass_attributes'
+const { setAttributes } = require('../util/setAttributes')
+const { getCounter } = require('../util/getCounter')
+const counter = getCounter()
 
-const counter = (value => () => value++)(0)
-
-export default function image(xlink, attr) {
+module.exports.image = function image(xlink, attr) {
     return parent => parent.append('feImage')
         .attr('xlink:href', xlink)
         .attr('result', `image-${counter()}`)
-        .call(feImageD3Node => passAttributes(feImageD3Node, attr))
+        .call(feImageD3Node => setAttributes(feImageD3Node, attr))
 }
