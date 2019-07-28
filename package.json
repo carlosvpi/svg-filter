@@ -5,8 +5,5 @@
   "main": "src/index.js",
   "repository": "https://github.com/carlosvpi/svg-filter.git",
   "author": "CarlosVazPI <carlos.vazpi@gmail.com>",
-  "license": "MIT",
-  "scripts": {
-  	"bundle": 
-  }
+  "license": "MIT"
 }
