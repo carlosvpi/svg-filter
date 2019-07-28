@@ -1,10 +1,10 @@
-import { passAttributes } from 'utils/pass_attributes'
+const { setAttributes } = require('../util/setAttributes')
+const { getCounter } = require('../util/getCounter')
+const counter = getCounter()
 
-const counter = (value => () => value++)(0)
-
-export default function colorMatrix(values, attr) {
+module.exports.colorMatrix = function colorMatrix(values, attr) {
     return parent => parent.append('feColorMatrix')
         .attr('values', values)
         .attr('result', `colored-${counter()}`)
-        .call(feColorMatrixD3Node => passAttributes(feColorMatrixD3Node, attr))
+        .call(feColorMatrixD3Node => setAttributes(feColorMatrixD3Node, attr))
 }

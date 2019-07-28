@@ -1,11 +1,11 @@
-import { passAttributes } from 'utils/pass_attributes'
+const { setAttributes } = require('../util/setAttributes')
+const { getCounter } = require('../util/getCounter')
+const counter = getCounter()
 
-const counter = (value => () => value++)(0)
-
-export default function flood(color, opacity = 1, attr = {}) {
+module.exports.flood = function flood(color, opacity = 1, attr = {}) {
     return parent => parent.append('feFlood')
         .attr('flood-color', color)
         .attr('flood-opacity', opacity)
         .attr('result', `flooded-${counter()}`)
-        .call(feFloodD3Node => passAttributes(feFloodD3Node, attr))
+        .call(feFloodD3Node => setAttributes(feFloodD3Node, attr))
 }
