@@ -7,10 +7,12 @@
   "author": "CarlosVazPI <carlos.vazpi@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "bundle": "browserify ./src/index.js -o bundle.js",
     "test": "node ./node_modules/mocha/bin/mocha test.js"
   },
   "devDependencies": {
     "chai": "^4.2.0",
+    "del": "^5.0.0",
     "mocha": "^6.2.0",
     "pixelmatch": "^5.0.2",
     "polyserve": "^0.27.15",
