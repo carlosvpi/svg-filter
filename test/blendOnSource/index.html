@@ -11,13 +11,14 @@
 		const svg = document.getElementById('svg')
 		const {
 			filter: getFilter,
-			blur,
-			createAppend
+			blendOnSource,
+			createAppend,
+			blur
 		} = svgFilters
 		filter = getFilter(svg)
-		const blurFilter = filter({
+		const blendOnSourceFilter = filter({
 			children: [
-				blur()
+				blendOnSource(blur())
 			]
 		})
 		createAppend('circle', {
@@ -25,7 +26,7 @@
 			cy: 60,
 			r: 50,
 			fill: 'green',
-			filter: blurFilter
+			filter: blendOnSourceFilter
 		})(svg)
 	</script>
 

@@ -57,7 +57,6 @@ describe('test', function() {
   })
 
   after((done) => {
-    // setTimeout(() => polyserve.close(done), 60000)
     polyserve.close(done)
     console.log('Closing server')
   })
@@ -73,8 +72,14 @@ describe('test', function() {
     beforeEach(async function() {
       return page.setViewport({ width: 800, height: 600 })
     })
-    it('blur', async function() {
-      return takeAndCompareScreenshot(page, 'blur')
-    })
+    fs.readdirSync('./test', { withFileTypes: true })
+      .filter(dirent => dirent.isDirectory())
+      .forEach(({ name }) => it(name, async function() {
+        try {
+          return takeAndCompareScreenshot(page, name)
+        } catch (e) {
+          console.error(e)
+        }
+      }))
   })
 })

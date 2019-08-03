@@ -3,5 +3,6 @@ module.exports = {
 	...require('./getId'),
 	...require('./getNodeFromTag'),
 	...require('./setAttributes'),
-	...require('./createElement')
+	...require('./createElement'),
+	...require('./createAppend')
 }

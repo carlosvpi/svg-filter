@@ -1,36 +1,23 @@
-const { setAttributes } = require('../util/setAttributes')
+const { createAppend } = require('../util/createAppend')
 const { getCounter } = require('../util/getCounter')
+const counter = getCounter()
 
-module.exports.blendOnSource = function blendOnSource({ subject, mode = 'normal', ...attrs }) {
-    const counter = getCounter()
-
-    return (parent) => {
-        const blendedNodeResult = subject(parent).getAttribute('result')
-        const blendNode = document.createElementNS("http://www.w3.org/2000/svg", 'feBlend')
-
-        setAttributes(blendNode, {
-            'in': 'SourceGraphic',
-            'in2': blendedNodeResult,
-            'mode': mode,
-            'result': `blended-${counter()}`,
-            ...attrs
-        })
-
-        parent.appendChild(blendNode)
-    }
+module.exports.blendOnSource = function blendOnSource(subject, { mode = 'normal', ...attrs } = {}) {
+    return (parent) => createAppend('feBlend', {
+        in: 'SourceGraphic',
+        in2: subject(parent).getAttribute('result'),
+        mode: mode,
+        result: `blended-${counter()}`,
+        ...attrs
+    })(parent)
 }
 
-module.exports.blendSourceOn = function blendSourceOn({ subject, mode = 'normal', attrs }) {
-    const counter = getCounter()
-
-    return (parent) => {
-        const blendedNodeResult = subject(parent).attr('result')
-
-        parent.append('feBlend')
-            .attr('in2', 'SourceGraphic')
-            .attr('in', blendedNodeResult)
-            .attr('mode', mode)
-            .attr('result', `blended-${counter()}`)
-            .call(feBlendD3Node => setAttributes(feBlendD3Node, attr))
-    }
+module.exports.blendSourceOn = function blendSourceOn(subject, { mode = 'normal', ...attrs } = {}) {
+    return (parent) => createAppend('feBlend', {
+        in2: 'SourceGraphic',
+        in: subject(parent).getAttribute('result'),
+        mode: mode,
+        result: `blended-${counter()}`,
+        ...attr
+    })(parent)
 }

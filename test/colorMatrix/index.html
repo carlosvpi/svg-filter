@@ -11,13 +11,13 @@
 		const svg = document.getElementById('svg')
 		const {
 			filter: getFilter,
-			blur,
+			colorMatrix,
 			createAppend
 		} = svgFilters
 		filter = getFilter(svg)
-		const blurFilter = filter({
+		const colorMatrixFilter = filter({
 			children: [
-				blur()
+				colorMatrix('0 1 0 0 0  0 0 1 0 0  1 0 0 0 0  .1 .1 .1 .1 .1')
 			]
 		})
 		createAppend('circle', {
@@ -25,7 +25,7 @@
 			cy: 60,
 			r: 50,
 			fill: 'green',
-			filter: blurFilter
+			filter: colorMatrixFilter
 		})(svg)
 	</script>
 

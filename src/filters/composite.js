@@ -1,29 +1,23 @@
-const { setAttributes } = require('../util/setAttributes')
+const { createAppend } = require('../util/createAppend')
 const { getCounter } = require('../util/getCounter')
 const counter = getCounter()
 
 module.exports.compositeOnSource = function compositeOnSource(toBeComposed, operator = 'in', attr = {}) {
-    return parent => {
-        const composedNodeResult = toBeComposed(parent).attr('result')
-
-        parent.append('feComposite')
-            .attr('in', 'SourceGraphic')
-            .attr('in2', composedNodeResult)
-            .attr('operator', operator)
-            .attr('result', `composite-${counter()}`)
-            .call(feCompositeD3Node => setAttributes(feCompositeD3Node, attr))
-    }
+    return (parent) => createAppend('feComposite', {
+        in: 'SourceGraphic',
+        in2: toBeComposed(parent).getAttribute('result'),
+        operator: operator,
+        result: `composite-${counter()}`,
+        ...attr
+    })(parent)
 }
 
 module.exports.compositeSourceOn = function compositeSourceOn(toBeComposed, operator = 'in', attr = {}) {
-    return parent => {
-        const composedNodeResult = toBeComposed(parent).attr('result')
-
-        parent.append('feComposite')
-            .attr('in2', 'SourceGraphic')
-            .attr('in', composedNodeResult)
-            .attr('operator', operator)
-            .attr('result', `composite-${counter()}`)
-            .call(feCompositeD3Node => setAttributes(feCompositeD3Node, attr))
-    }
+    return (parent) => createAppend('feComposite', {
+        in2: 'SourceGraphic',
+        in: toBeComposed(parent).getAttribute('result'),
+        operator: operator,
+        result: `composite-${counter()}`,
+        ...attr
+    })(parent)
 }

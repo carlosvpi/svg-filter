@@ -10,22 +10,23 @@
 	<script>
 		const svg = document.getElementById('svg')
 		const {
-			filter: getFilter,
-			blur,
+			linearGradient: getLinearGradient,
+			stop,
 			createAppend
 		} = svgFilters
-		filter = getFilter(svg)
-		const blurFilter = filter({
+		linearGradient = getLinearGradient(svg)
+		const gradient = linearGradient({
 			children: [
-				blur()
+				stop('0%', 'yellow'),
+				stop('50%', 'red'),
+				stop('100%', 'green')
 			]
 		})
 		createAppend('circle', {
 			cx: 170,
 			cy: 60,
 			r: 50,
-			fill: 'green',
-			filter: blurFilter
+			fill: gradient
 		})(svg)
 	</script>
 

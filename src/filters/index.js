@@ -1,18 +1,18 @@
 module.exports = {
 	...require('./blend'),
 	...require('./blur'),
-	...require('./color_matrix'),
+	...require('./colorMatrix'),
 	...require('./composite'),
-	...require('./convolve_matrix'),
+	...require('./convolveMatrix'),
 	...require('./filter'),
 	...require('./flood'),
 	...require('./image'),
-	...require('./linear_gradient'),
+	...require('./linearGradient'),
 	...require('./merge'),
 	...require('./morphology'),
 	...require('./offset'),
 	...require('./pattern'),
-	...require('./radial_gradient'),
+	...require('./radialGradient'),
 	...require('./stop'),
 	...require('./turbulence')
 }
