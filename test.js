@@ -41,12 +41,15 @@ async function takeAndCompareScreenshot(page, route) {
             { threshold: 0.1 })
 
         expect(numDiffPixels, 'number of different pixels').equal(0)
+        if (numDiffPixels == 0) {
+            del([tmpFile])
+        }
         resolve()
       }
     })
 }
 
-describe('👀  screenshots are correct', function() {
+describe('test', function() {
   let polyserve, browser, page
 
   before(async function() {
@@ -54,8 +57,7 @@ describe('👀  screenshots are correct', function() {
   })
 
   after((done) => {
-    del([`test/*/tmp.png`]) /* */
-      .then(() => console.log('Deleted tmp files'))
+    // setTimeout(() => polyserve.close(done), 60000)
     polyserve.close(done)
     console.log('Closing server')
   })
@@ -67,7 +69,7 @@ describe('👀  screenshots are correct', function() {
 
   afterEach(() => browser.close())
 
-  describe('Tests', function() {
+  describe('svg-filter', function() {
     beforeEach(async function() {
       return page.setViewport({ width: 800, height: 600 })
     })

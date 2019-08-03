@@ -36,24 +36,22 @@ module.exports.blendSourceOn = function blendSourceOn({ subject, mode = 'normal'
     }
 }
 
-},{"../util/getCounter":18,"../util/setAttributes":21}],2:[function(require,module,exports){
-const { setAttributes } = require('../util/setAttributes')
+},{"../util/getCounter":20,"../util/setAttributes":24}],2:[function(require,module,exports){
+const { createElement } = require('../util/createElement')
 const { getCounter } = require('../util/getCounter')
 const counter = getCounter()
 
 module.exports.blur = function blur(stdDeviation = 5, attr) {
     return parent => {
-    	gaussianBlurNode = document.createElementNS("http://www.w3.org/2000/svg", 'feGaussianBlur')
-    	parent.append(gaussianBlurNode)
-    	setAttributes(gaussianBlurNode, {
-	        'stdDeviation': stdDeviation,
-	        'result': `blurred-${counter('result')}`,
-	        ...attr
-    	})
+        parent.append(createElement('feGaussianBlur', {
+            'stdDeviation': stdDeviation,
+            'result': `blurred-${counter('result')}`,
+            ...attr
+        }))
     }
 }
 
-},{"../util/getCounter":18,"../util/setAttributes":21}],3:[function(require,module,exports){
+},{"../util/createElement":19,"../util/getCounter":20}],3:[function(require,module,exports){
 const { setAttributes } = require('../util/setAttributes')
 const { getCounter } = require('../util/getCounter')
 const counter = getCounter()
@@ -65,7 +63,7 @@ module.exports.colorMatrix = function colorMatrix(values, attr) {
         .call(feColorMatrixD3Node => setAttributes(feColorMatrixD3Node, attr))
 }
 
-},{"../util/getCounter":18,"../util/setAttributes":21}],4:[function(require,module,exports){
+},{"../util/getCounter":20,"../util/setAttributes":24}],4:[function(require,module,exports){
 const { setAttributes } = require('../util/setAttributes')
 const { getCounter } = require('../util/getCounter')
 const counter = getCounter()
@@ -96,7 +94,7 @@ module.exports.compositeSourceOn = function compositeSourceOn(toBeComposed, oper
     }
 }
 
-},{"../util/getCounter":18,"../util/setAttributes":21}],5:[function(require,module,exports){
+},{"../util/getCounter":20,"../util/setAttributes":24}],5:[function(require,module,exports){
 const { setAttributes } = require('../util/setAttributes')
 const { getCounter } = require('../util/getCounter')
 const counter = getCounter()
@@ -108,7 +106,7 @@ module.exports.convolveMatrix = function convolveMatrix(values, attr) {
         .call(feConvolveMatrixD3Node => setAttributes(feConvolveMatrixD3Node, attr))
 }
 
-},{"../util/getCounter":18,"../util/setAttributes":21}],6:[function(require,module,exports){
+},{"../util/getCounter":20,"../util/setAttributes":24}],6:[function(require,module,exports){
 const { getNodeFromTag } = require('../util/getNodeFromTag')
 const { getId } = require('../util/getId')
 const { setAttributes } = require('../util/setAttributes')
@@ -127,7 +125,7 @@ module.exports.filter = (svg) => {
 	}
 }
 
-},{"../util/getId":19,"../util/getNodeFromTag":20,"../util/setAttributes":21}],7:[function(require,module,exports){
+},{"../util/getId":21,"../util/getNodeFromTag":22,"../util/setAttributes":24}],7:[function(require,module,exports){
 const { setAttributes } = require('../util/setAttributes')
 const { getCounter } = require('../util/getCounter')
 const counter = getCounter()
@@ -140,7 +138,7 @@ module.exports.flood = function flood(color, opacity = 1, attr = {}) {
         .call(feFloodD3Node => setAttributes(feFloodD3Node, attr))
 }
 
-},{"../util/getCounter":18,"../util/setAttributes":21}],8:[function(require,module,exports){
+},{"../util/getCounter":20,"../util/setAttributes":24}],8:[function(require,module,exports){
 const { setAttributes } = require('../util/setAttributes')
 const { getCounter } = require('../util/getCounter')
 const counter = getCounter()
@@ -152,7 +150,27 @@ module.exports.image = function image(xlink, attr) {
         .call(feImageD3Node => setAttributes(feImageD3Node, attr))
 }
 
-},{"../util/getCounter":18,"../util/setAttributes":21}],9:[function(require,module,exports){
+},{"../util/getCounter":20,"../util/setAttributes":24}],9:[function(require,module,exports){
+module.exports = {
+	...require('./blend'),
+	...require('./blur'),
+	...require('./color_matrix'),
+	...require('./composite'),
+	...require('./convolve_matrix'),
+	...require('./filter'),
+	...require('./flood'),
+	...require('./image'),
+	...require('./linear_gradient'),
+	...require('./merge'),
+	...require('./morphology'),
+	...require('./offset'),
+	...require('./pattern'),
+	...require('./radial_gradient'),
+	...require('./stop'),
+	...require('./turbulence')
+}
+
+},{"./blend":1,"./blur":2,"./color_matrix":3,"./composite":4,"./convolve_matrix":5,"./filter":6,"./flood":7,"./image":8,"./linear_gradient":10,"./merge":11,"./morphology":12,"./offset":13,"./pattern":14,"./radial_gradient":15,"./stop":16,"./turbulence":17}],10:[function(require,module,exports){
 const { setAttributes } = require('../util/setAttributes')
 const { getNodeFromTag } = require('../util/getNodeFromTag')
 const { getId } = require('../util/getNodeFromTag')
@@ -172,7 +190,7 @@ module.exports.linearGradient = (svg) => {
 	    return `url(#${id})`
 	}
 }
-},{"../util/getNodeFromTag":20,"../util/setAttributes":21}],10:[function(require,module,exports){
+},{"../util/getNodeFromTag":22,"../util/setAttributes":24}],11:[function(require,module,exports){
 const { setAttributes } = require('../util/setAttributes')
 const { getCounter } = require('../util/getCounter')
 const counter = getCounter()
@@ -190,7 +208,7 @@ module.exports.merge = function merge(childrenFilters, attr) {
         })
 }
 
-},{"../util/getCounter":18,"../util/setAttributes":21}],11:[function(require,module,exports){
+},{"../util/getCounter":20,"../util/setAttributes":24}],12:[function(require,module,exports){
 const { setAttributes } = require('../util/setAttributes')
 const { getCounter } = require('../util/getCounter')
 const counter = getCounter()
@@ -203,7 +221,7 @@ module.exports.morphology = function morphology(radius = 0, attr = {}) {
         .call(feMorhologyD3Node => setAttributes(feMorhologyD3Node, attr))
 }
 
-},{"../util/getCounter":18,"../util/setAttributes":21}],12:[function(require,module,exports){
+},{"../util/getCounter":20,"../util/setAttributes":24}],13:[function(require,module,exports){
 const { setAttributes } = require('../util/setAttributes')
 const { getCounter } = require('../util/getCounter')
 const counter = getCounter()
@@ -216,7 +234,7 @@ module.exports.offset = function offset(dx = 0, dy = 0, attr = {}) {
         .call(feOffsetD3Node => setAttributes(feOffsetD3Node, attr))
 }
 
-},{"../util/getCounter":18,"../util/setAttributes":21}],13:[function(require,module,exports){
+},{"../util/getCounter":20,"../util/setAttributes":24}],14:[function(require,module,exports){
 const { setAttributes } = require('../util/setAttributes')
 const { getNodeFromTag } = require('../util/getNodeFromTag')
 const { getId } = require('../util/getNodeFromTag')
@@ -241,7 +259,7 @@ module.exports.pattern = (svg) => {
 	}
 }
 
-},{"../util/getNodeFromTag":20,"../util/setAttributes":21}],14:[function(require,module,exports){
+},{"../util/getNodeFromTag":22,"../util/setAttributes":24}],15:[function(require,module,exports){
 const { setAttributes } = require('../util/setAttributes')
 const { getNodeFromTag } = require('../util/getNodeFromTag')
 const { getId } = require('../util/getNodeFromTag')
@@ -261,7 +279,7 @@ module.exports.radialGradient = (svg) => {
 	    return `url(#${id})`
 	}
 }
-},{"../util/getNodeFromTag":20,"../util/setAttributes":21}],15:[function(require,module,exports){
+},{"../util/getNodeFromTag":22,"../util/setAttributes":24}],16:[function(require,module,exports){
 const { setAttributes } = require('../util/setAttributes')
 const { getCounter } = require('../util/getCounter')
 const counter = getCounter()
@@ -274,7 +292,7 @@ module.exports.stop = function stop(offset, stopColor, stopOpacity = 1, attr = {
         .call(feStopD3Node => setAttributes(feStopD3Node, attr))
 }
 
-},{"../util/getCounter":18,"../util/setAttributes":21}],16:[function(require,module,exports){
+},{"../util/getCounter":20,"../util/setAttributes":24}],17:[function(require,module,exports){
 const { setAttributes } = require('../util/setAttributes')
 const { getCounter } = require('../util/getCounter')
 const counter = getCounter()
@@ -285,35 +303,31 @@ module.exports.turbulence = function turbulence(attr) {
         .call(feTurbulenceD3Node => setAttributes(feTurbulenceD3Node, attr))
 }
 
-},{"../util/getCounter":18,"../util/setAttributes":21}],17:[function(require,module,exports){
+},{"../util/getCounter":20,"../util/setAttributes":24}],18:[function(require,module,exports){
 module.exports = {
-	...require('./filters/blend'),
-	...require('./filters/blur'),
-	...require('./filters/color_matrix'),
-	...require('./filters/composite'),
-	...require('./filters/convolve_matrix'),
-	...require('./filters/filter'),
-	...require('./filters/flood'),
-	...require('./filters/image'),
-	...require('./filters/linear_gradient'),
-	...require('./filters/merge'),
-	...require('./filters/morphology'),
-	...require('./filters/offset'),
-	...require('./filters/pattern'),
-	...require('./filters/radial_gradient'),
-	...require('./filters/stop'),
-	...require('./filters/turbulence')
+	...require('./filters'),
+	...require('./util')
 }
 
 if (typeof window !== 'undefined') {
 	svgFilters = module.exports
 }
-},{"./filters/blend":1,"./filters/blur":2,"./filters/color_matrix":3,"./filters/composite":4,"./filters/convolve_matrix":5,"./filters/filter":6,"./filters/flood":7,"./filters/image":8,"./filters/linear_gradient":9,"./filters/merge":10,"./filters/morphology":11,"./filters/offset":12,"./filters/pattern":13,"./filters/radial_gradient":14,"./filters/stop":15,"./filters/turbulence":16}],18:[function(require,module,exports){
+},{"./filters":9,"./util":23}],19:[function(require,module,exports){
+module.exports.createElement = (tagName, attrs) => {
+	const node = document.createElementNS('http://www.w3.org/2000/svg', tagName)
+
+	for (let name in attrs) {
+		node.setAttribute(name, attrs[name])
+	}
+
+	return node
+}
+},{}],20:[function(require,module,exports){
 module.exports.getCounter = (initial = 0) => (value => () => value++)(initial)
 
-},{}],19:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 module.exports.getId = () => Math.random().toString(36).substr(2, 9)
-},{}],20:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 module.exports.getNodeFromTag = (parent = document.getElementsByTagName('body')[0]) => (tagName) => {
 	let node = parent.getElementsByTagName(tagName)[0]
 	if (!node) {
@@ -322,13 +336,21 @@ module.exports.getNodeFromTag = (parent = document.getElementsByTagName('body')[
 	}
 	return node
 }
-},{}],21:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
+module.exports = {
+	...require('./getCounter'),
+	...require('./getId'),
+	...require('./getNodeFromTag'),
+	...require('./setAttributes'),
+	...require('./createElement')
+}
+
+},{"./createElement":19,"./getCounter":20,"./getId":21,"./getNodeFromTag":22,"./setAttributes":24}],24:[function(require,module,exports){
 module.exports.setAttributes = (node, attrs) => {
 	for (let name in attrs) {
 		node.setAttribute(name, attrs[name])
-		// node.setAttributeNS('http://www.w3.org/2000/svg', name, attrs[name])
 	}
 
 	return node
 }
-},{}]},{},[17]);
+},{}]},{},[18]);
