@@ -19,7 +19,7 @@ module.exports.blendSourceOn = function blendSourceOn(subject, { mode = 'normal'
         in: subject(parent).getAttribute('result'),
         mode: mode,
         result: `blended-${counter()}`,
-        ...attr
+        ...attrs
     })(parent)
 }
 
@@ -121,18 +121,19 @@ module.exports.flood = function flood(color, opacity = 1, attr = {}) {
 }
 
 },{"../util/createAppend":19,"../util/getCounter":21}],8:[function(require,module,exports){
-const { setAttributes } = require('../util/setAttributes')
+const { createAppend } = require('../util/createAppend')
 const { getCounter } = require('../util/getCounter')
 const counter = getCounter()
 
-module.exports.image = function image(xlink, attr) {
-    return parent => parent.append('feImage')
-        .attr('xlink:href', xlink)
-        .attr('result', `image-${counter()}`)
-        .call(feImageD3Node => setAttributes(feImageD3Node, attr))
+module.exports.image = function image(href, attr) {
+    return createAppend('feImage', {
+        href,
+        result: `image-${counter()}`,
+        ...attr
+    })
 }
 
-},{"../util/getCounter":21,"../util/setAttributes":25}],9:[function(require,module,exports){
+},{"../util/createAppend":19,"../util/getCounter":21}],9:[function(require,module,exports){
 module.exports = {
 	...require('./blend'),
 	...require('./blur'),
@@ -189,77 +190,72 @@ module.exports.merge = function merge(childrenFilters, attr) {
 }
 
 },{"../util/getCounter":21,"../util/setAttributes":25}],12:[function(require,module,exports){
-const { setAttributes } = require('../util/setAttributes')
+const { createAppend } = require('../util/createAppend')
 const { getCounter } = require('../util/getCounter')
 const counter = getCounter()
 
 module.exports.morphology = function morphology(radius = 0, attr = {}) {
-    return parent => parent.append('feMorphology')
-        .attr('radius', Math.abs(radius))
-        .attr('operator', radius >= 0 ? 'dilate' : 'erode')
-        .attr('result', `morphology-${counter('result')}`)
-        .call(feMorhologyD3Node => setAttributes(feMorhologyD3Node, attr))
+    return createAppend('feMorphology', {
+        radius: Math.abs(radius),
+        operator: radius >= 0 ? 'dilate' : 'erode',
+        result: `morphology-${counter('result')}`,
+        ...attr
+    })
 }
 
-},{"../util/getCounter":21,"../util/setAttributes":25}],13:[function(require,module,exports){
-const { setAttributes } = require('../util/setAttributes')
+},{"../util/createAppend":19,"../util/getCounter":21}],13:[function(require,module,exports){
+const { createAppend } = require('../util/createAppend')
 const { getCounter } = require('../util/getCounter')
 const counter = getCounter()
 
 module.exports.offset = function offset(dx = 0, dy = 0, attr = {}) {
-    return parent => parent.append('feOffset')
-        .attr('dx', dx)
-        .attr('dy', dy)
-        .attr('result', `offset-${counter('result')}`)
-        .call(feOffsetD3Node => setAttributes(feOffsetD3Node, attr))
+    return createAppend('feOffset', {
+        dx: dx,
+        dy: dy,
+        result: `offset-${counter('result')}`,
+        ...attr
+    })
 }
 
-},{"../util/getCounter":21,"../util/setAttributes":25}],14:[function(require,module,exports){
-const { setAttributes } = require('../util/setAttributes')
+},{"../util/createAppend":19,"../util/getCounter":21}],14:[function(require,module,exports){
 const { getNodeFromTag } = require('../util/getNodeFromTag')
-const { getId } = require('../util/getNodeFromTag')
+const { getId } = require('../util/getId')
+const { setAttributes } = require('../util/setAttributes')
 
 module.exports.pattern = (svg) => {
-    const defsNode = getNodeFromTag(svg)('DEFS')
+    return ({ children, ...attrs }) => {
+        const id = `patternNode-${getId()}`
+        const patternNode = document.createElementNS('http://www.w3.org/2000/svg', 'pattern')
 
-	return ({ children, ...attrs }) => {
-	    if (!(typeof children === 'function')) {
-	    	throw new Error(`Expected a function as children of "pattern" node, got ${children}`)
-	    }
+        patternNode.setAttribute('id', id)
+        setAttributes(patternNode, attrs)
+        svg.appendChild(patternNode)
+        children.forEach(child => child(patternNode))
 
-	    const id = `pattern-${getId()}`
-	    const patternNode = document.createElementNS("http://www.w3.org/2000/svg", 'pattern')
-
-	    patternNode.setAttribute('id', id)
-	    setAttributes(patternNode, attrs)
-	    defsNode.appendChild(patternNode)
-	    children(patternNode)
-
-	    return `url(#${id})`
-	}
+        return `url(#${id})`
+    }
 }
 
-},{"../util/getNodeFromTag":23,"../util/setAttributes":25}],15:[function(require,module,exports){
-const { setAttributes } = require('../util/setAttributes')
+},{"../util/getId":22,"../util/getNodeFromTag":23,"../util/setAttributes":25}],15:[function(require,module,exports){
 const { getNodeFromTag } = require('../util/getNodeFromTag')
-const { getId } = require('../util/getNodeFromTag')
+const { getId } = require('../util/getId')
+const { setAttributes } = require('../util/setAttributes')
 
 module.exports.radialGradient = (svg) => {
-    const defsNode = getNodeFromTag(svg)('DEFS')
+    return ({ children, ...attrs }) => {
+        const id = `radial-gradient-${getId()}`
+        const radialGradientNode = document.createElementNS('http://www.w3.org/2000/svg', 'radialGradient')
 
-	return ({ children, ...attrs }) => {
-	    const id = `radial-gradient-${getId()}`
-	    const radialGradientNode = document.createElementNS("http://www.w3.org/2000/svg", 'radialGradient')
+        radialGradientNode.setAttribute('id', id)
+        setAttributes(radialGradientNode, attrs)
+        svg.appendChild(radialGradientNode)
+        children.forEach(stop => stop(radialGradientNode))
 
-	    radialGradientNode.setAttribute('id', id)
-	    setAttributes(radialGradientNode, attrs)
-	    defsNode.appendChild(radialGradientNode)
-	    children.forEach(stop => stop(radialGradientNode))
-
-	    return `url(#${id})`
-	}
+        return `url(#${id})`
+    }
 }
-},{"../util/getNodeFromTag":23,"../util/setAttributes":25}],16:[function(require,module,exports){
+
+},{"../util/getId":22,"../util/getNodeFromTag":23,"../util/setAttributes":25}],16:[function(require,module,exports){
 const { createAppend } = require('../util/createAppend')
 
 module.exports.stop = function stop(offset, stopColor, stopOpacity = 1, attr = {}) {
@@ -272,17 +268,18 @@ module.exports.stop = function stop(offset, stopColor, stopOpacity = 1, attr = {
 }
 
 },{"../util/createAppend":19}],17:[function(require,module,exports){
-const { setAttributes } = require('../util/setAttributes')
+const { createAppend } = require('../util/createAppend')
 const { getCounter } = require('../util/getCounter')
 const counter = getCounter()
 
 module.exports.turbulence = function turbulence(attr) {
-    return parent => parent.append('feTurbulence')
-        .attr('result', `turbulence-${counter()}`)
-        .call(feTurbulenceD3Node => setAttributes(feTurbulenceD3Node, attr))
+    return createAppend('feTurbulence', {
+        result: `turbulence-${counter()}`,
+        ...attr
+    })
 }
 
-},{"../util/getCounter":21,"../util/setAttributes":25}],18:[function(require,module,exports){
+},{"../util/createAppend":19,"../util/getCounter":21}],18:[function(require,module,exports){
 module.exports = {
 	...require('./filters'),
 	...require('./util')

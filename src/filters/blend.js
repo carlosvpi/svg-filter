@@ -18,6 +18,6 @@ module.exports.blendSourceOn = function blendSourceOn(subject, { mode = 'normal'
         in: subject(parent).getAttribute('result'),
         mode: mode,
         result: `blended-${counter()}`,
-        ...attr
+        ...attrs
     })(parent)
 }

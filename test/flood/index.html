@@ -14,7 +14,7 @@
 			flood,
 			createAppend,
 		} = svgFilters
-		filter = getFilter(svg)
+		const filter = getFilter(svg)
 		const floodFilter = filter({
 			children: [
 				flood('blue', .2)

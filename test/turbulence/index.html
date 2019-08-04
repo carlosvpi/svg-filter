@@ -11,14 +11,18 @@
 		const svg = document.getElementById('svg')
 		const {
 			filter: getFilter,
-			compositeSourceOn,
-			createAppend,
-			blur
+			turbulence,
+			createAppend
 		} = svgFilters
 		const filter = getFilter(svg)
-		const compositeSourceOnFilter = filter({
+		const turbulenceFilter = filter({
 			children: [
-				compositeSourceOn(blur())
+				turbulence({
+					type: 'turbulence',
+					baseFrequency: '0.05',
+			        numOctaves: '2',
+			        result: 'turbulence'
+				})
 			]
 		})
 		createAppend('circle', {
@@ -26,7 +30,7 @@
 			cy: 60,
 			r: 50,
 			fill: 'green',
-			filter: compositeSourceOnFilter
+			filter: turbulenceFilter
 		})(svg)
 	</script>
 

@@ -1,10 +1,11 @@
-const { setAttributes } = require('../util/setAttributes')
+const { createAppend } = require('../util/createAppend')
 const { getCounter } = require('../util/getCounter')
 const counter = getCounter()
 
-module.exports.image = function image(xlink, attr) {
-    return parent => parent.append('feImage')
-        .attr('xlink:href', xlink)
-        .attr('result', `image-${counter()}`)
-        .call(feImageD3Node => setAttributes(feImageD3Node, attr))
+module.exports.image = function image(href, attr) {
+    return createAppend('feImage', {
+        href,
+        result: `image-${counter()}`,
+        ...attr
+    })
 }

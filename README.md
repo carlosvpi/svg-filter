@@ -14,19 +14,21 @@ And then, in your code, import:
 import { filter } from 'svg-filter'
 ```
 
-## Test
-
-First bundle:
+## Bundle
 
 ```bash
 $ npm run bundle
 ```
 
-And then run the tests:
+## Test
 
 ```bash
 $ npm test
 ```
+
+Add `--updateSnapshots` to update the snapshots.
+
+Add file names to test only those.
 
 ## filter(svg)(props)
 

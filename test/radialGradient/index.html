@@ -10,23 +10,23 @@
 	<script>
 		const svg = document.getElementById('svg')
 		const {
-			filter: getFilter,
-			compositeSourceOn,
-			createAppend,
-			blur
+			radialGradient: getRadialGradient,
+			stop,
+			createAppend
 		} = svgFilters
-		const filter = getFilter(svg)
-		const compositeSourceOnFilter = filter({
+		const radialGradient = getRadialGradient(svg)
+		const gradient = radialGradient({
 			children: [
-				compositeSourceOn(blur())
+				stop('0%', 'yellow'),
+				stop('50%', 'red'),
+				stop('100%', 'green')
 			]
 		})
 		createAppend('circle', {
 			cx: 170,
 			cy: 60,
 			r: 50,
-			fill: 'green',
-			filter: compositeSourceOnFilter
+			fill: gradient
 		})(svg)
 	</script>
 

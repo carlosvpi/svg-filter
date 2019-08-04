@@ -11,14 +11,13 @@
 		const svg = document.getElementById('svg')
 		const {
 			filter: getFilter,
-			compositeSourceOn,
+			offset,
 			createAppend,
-			blur
 		} = svgFilters
 		const filter = getFilter(svg)
-		const compositeSourceOnFilter = filter({
+		const offsetFilter = filter({
 			children: [
-				compositeSourceOn(blur())
+				offset(10, 10)
 			]
 		})
 		createAppend('circle', {
@@ -26,7 +25,7 @@
 			cy: 60,
 			r: 50,
 			fill: 'green',
-			filter: compositeSourceOnFilter
+			filter: offsetFilter
 		})(svg)
 	</script>
 

@@ -7,11 +7,12 @@ const pixelmatch = require('pixelmatch')
 const { PNG } = require('pngjs')
 const fs = require('fs')
 const del = require('del')
+const getGoldenFile = route => `test/${route}/golden.png`
 
 async function takeAndCompareScreenshot(page, route) {
   const url = `test/${route}/index.html`
   const tmpFile = `test/${route}/tmp.png`
-  const goldenFile = `test/${route}/golden.png`
+  const goldenFile = getGoldenFile(route)
   const isGoldenThere = fs.existsSync(goldenFile)
 
   await page.goto(`http://127.0.0.1:4000/${url}`)
@@ -72,11 +73,22 @@ describe('test', function() {
     beforeEach(async function() {
       return page.setViewport({ width: 800, height: 600 })
     })
-    fs.readdirSync('./test', { withFileTypes: true })
+
+    const argvFiles = process.argv.slice(3)
+      .filter((file) => file !== '--updateSnapshots')
+    const allFiles = fs.readdirSync('./test', { withFileTypes: true })
       .filter(dirent => dirent.isDirectory())
-      .forEach(({ name }) => it(name, async function() {
+      .map(({ name }) => name)
+    const files = argvFiles.length === 0 ? allFiles : argvFiles
+    const shouldUpdateSnapshots = process.argv.includes('--updateSnapshots')
+    if (shouldUpdateSnapshots) {
+      del(files.map(getGoldenFile))
+    }
+
+
+    files.forEach((file) => it(file, async function() {
         try {
-          return takeAndCompareScreenshot(page, name)
+          return takeAndCompareScreenshot(page, file)
         } catch (e) {
           console.error(e)
         }

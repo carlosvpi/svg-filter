@@ -10,23 +10,25 @@
 	<script>
 		const svg = document.getElementById('svg')
 		const {
-			filter: getFilter,
-			compositeSourceOn,
-			createAppend,
-			blur
+			pattern: getPattern,
+			stop,
+			createAppend
 		} = svgFilters
-		const filter = getFilter(svg)
-		const compositeSourceOnFilter = filter({
+		const pattern = getPattern(svg)
+		const polygonalPattern = pattern({
 			children: [
-				compositeSourceOn(blur())
-			]
+				createAppend('polygon', {
+					points: '0,0 2,5 0,10 5,8 10,10 8,5 10,0 5,2'
+				})
+			],
+			height: '10%',
+			width: '10%'
 		})
 		createAppend('circle', {
 			cx: 170,
 			cy: 60,
 			r: 50,
-			fill: 'green',
-			filter: compositeSourceOnFilter
+			fill: polygonalPattern
 		})(svg)
 	</script>
 

@@ -15,7 +15,7 @@
 			createAppend,
 			blur
 		} = svgFilters
-		filter = getFilter(svg)
+		const filter = getFilter(svg)
 		const blendSourceOnFilter = filter({
 			children: [
 				blendSourceOn(blur())

@@ -11,14 +11,13 @@
 		const svg = document.getElementById('svg')
 		const {
 			filter: getFilter,
-			compositeSourceOn,
-			createAppend,
-			blur
+			morphology,
+			createAppend
 		} = svgFilters
 		const filter = getFilter(svg)
-		const compositeSourceOnFilter = filter({
+		const morphologyFilter = filter({
 			children: [
-				compositeSourceOn(blur())
+				morphology(4)
 			]
 		})
 		createAppend('circle', {
@@ -26,7 +25,7 @@
 			cy: 60,
 			r: 50,
 			fill: 'green',
-			filter: compositeSourceOnFilter
+			filter: morphologyFilter
 		})(svg)
 	</script>
 
