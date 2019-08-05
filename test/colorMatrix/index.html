@@ -15,11 +15,7 @@
 			createAppend
 		} = svgFilters
 		const filter = getFilter(svg)
-		const colorMatrixFilter = filter({
-			children: [
-				colorMatrix('0 1 0 0 0  0 0 1 0 0  1 0 0 0 0  .1 .1 .1 .1 .1')
-			]
-		})
+		const colorMatrixFilter = filter(colorMatrix('0 1 0 0 0  0 0 1 0 0  1 0 0 0 0  .1 .1 .1 .1 .1'))
 		createAppend('circle', {
 			cx: 170,
 			cy: 60,

@@ -16,11 +16,7 @@
 			blur
 		} = svgFilters
 		const filter = getFilter(svg)
-		const blendSourceOnFilter = filter({
-			children: [
-				blendSourceOn(blur())
-			]
-		})
+		const blendSourceOnFilter = filter(blendSourceOn(blur()))
 		createAppend('circle', {
 			cx: 170,
 			cy: 60,

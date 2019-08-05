@@ -15,11 +15,7 @@
 			createAppend
 		} = svgFilters
 		const filter = getFilter(svg)
-		const convolveMatrixFilter = filter({
-			children: [
-				convolveMatrix('3 0 0  0 0 0  0 0 -3')
-			]
-		})
+		const convolveMatrixFilter = filter(convolveMatrix('3 0 0  0 0 0  0 0 -3'))
 		createAppend('circle', {
 			cx: 170,
 			cy: 60,

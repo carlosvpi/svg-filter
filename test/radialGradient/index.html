@@ -15,13 +15,11 @@
 			createAppend
 		} = svgFilters
 		const radialGradient = getRadialGradient(svg)
-		const gradient = radialGradient({
-			children: [
-				stop('0%', 'yellow'),
-				stop('50%', 'red'),
-				stop('100%', 'green')
-			]
-		})
+		const gradient = radialGradient(
+			stop('0%', 'yellow'),
+			stop('50%', 'red'),
+			stop('100%', 'green')
+		)
 		createAppend('circle', {
 			cx: 170,
 			cy: 60,

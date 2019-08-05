@@ -15,15 +15,15 @@
 			createAppend
 		} = svgFilters
 		const pattern = getPattern(svg)
-		const polygonalPattern = pattern({
-			children: [
-				createAppend('polygon', {
-					points: '0,0 2,5 0,10 5,8 10,10 8,5 10,0 5,2'
-				})
-			],
-			height: '10%',
-			width: '10%'
-		})
+		const polygonalPattern = pattern(
+			createAppend('polygon', {
+				points: '0,0 2,5 0,10 5,8 10,10 8,5 10,0 5,2'
+			})
+			, {
+				height: '10%',
+				width: '10%'
+			}
+		)
 		createAppend('circle', {
 			cx: 170,
 			cy: 60,

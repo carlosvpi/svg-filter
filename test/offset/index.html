@@ -15,11 +15,7 @@
 			createAppend,
 		} = svgFilters
 		const filter = getFilter(svg)
-		const offsetFilter = filter({
-			children: [
-				offset(10, 10)
-			]
-		})
+		const offsetFilter = filter(offset(10, 10))
 		createAppend('circle', {
 			cx: 170,
 			cy: 60,

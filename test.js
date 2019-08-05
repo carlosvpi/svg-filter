@@ -85,7 +85,6 @@ describe('test', function() {
       del(files.map(getGoldenFile))
     }
 
-
     files.forEach((file) => it(file, async function() {
         try {
           return takeAndCompareScreenshot(page, file)

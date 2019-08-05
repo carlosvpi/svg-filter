@@ -93,7 +93,9 @@ const { getId } = require('../util/getId')
 const { setAttributes } = require('../util/setAttributes')
 
 module.exports.filter = (svg) => {
-    return ({ children, ...attrs }) => {
+    return (...args) => {
+    	const children = args.filter((arg) => typeof arg === 'function')
+    	const attrs = args.filter((arg) => typeof arg === 'object').reduce((acc, arg) => ({ ...acc, ...arg }), {})
         const id = `filter-${getId()}`
         const filterNode = document.createElementNS('http://www.w3.org/2000/svg', 'filter')
 
@@ -159,7 +161,9 @@ const { getId } = require('../util/getId')
 const { setAttributes } = require('../util/setAttributes')
 
 module.exports.linearGradient = (svg) => {
-    return ({ children, ...attrs }) => {
+    return (...args) => {
+    	const children = args.filter((arg) => typeof arg === 'function')
+    	const attrs = args.filter((arg) => typeof arg === 'object').reduce((acc, arg) => ({ ...acc, ...arg }), {})
         const id = `linear-gradient-${getId()}`
         const linearGradientNode = document.createElementNS('http://www.w3.org/2000/svg', 'linearGradient')
 
@@ -223,7 +227,9 @@ const { getId } = require('../util/getId')
 const { setAttributes } = require('../util/setAttributes')
 
 module.exports.pattern = (svg) => {
-    return ({ children, ...attrs }) => {
+    return (...args) => {
+    	const children = args.filter((arg) => typeof arg === 'function')
+    	const attrs = args.filter((arg) => typeof arg === 'object').reduce((acc, arg) => ({ ...acc, ...arg }), {})
         const id = `patternNode-${getId()}`
         const patternNode = document.createElementNS('http://www.w3.org/2000/svg', 'pattern')
 
@@ -242,7 +248,9 @@ const { getId } = require('../util/getId')
 const { setAttributes } = require('../util/setAttributes')
 
 module.exports.radialGradient = (svg) => {
-    return ({ children, ...attrs }) => {
+    return (...args) => {
+    	const children = args.filter((arg) => typeof arg === 'function')
+    	const attrs = args.filter((arg) => typeof arg === 'object').reduce((acc, arg) => ({ ...acc, ...arg }), {})
         const id = `radial-gradient-${getId()}`
         const radialGradientNode = document.createElementNS('http://www.w3.org/2000/svg', 'radialGradient')
 
